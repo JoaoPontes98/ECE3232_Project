@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <executable name="dist/default/debug/Speaker_Test.X.debug.elf">
+    <memory name="data">
+      <units>bytes</units>
+      <length>24576</length>
+      <used>80</used>
+      <free>24496</free>
+    </memory>
+    <memory name="program">
+      <units>bytes</units>
+      <length>269184</length>
+      <used>564</used>
+      <free>268620</free>
+    </memory>
+  </executable>
+</project>
