@@ -157,7 +157,7 @@ void handleInput(char lane, int inputTime){
     
     if (offset <= (GOOD_THRESHOLD * -1)){
         //Okay & late
-        hitNote(1)
+        hitNote(1);
         pBottom->hit = 2;
         pBottom++;
     } else if (offset <= GOOD_THRESHOLD) {
