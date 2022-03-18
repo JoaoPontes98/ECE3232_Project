@@ -11,13 +11,12 @@ typedef struct note {
 
 #define HIT_NONE 0
 
-
 void awardPoints(int);
 
 void incrementStarPower();
 
 void missNote(Note*);
 
-void hitNote(Note*,int);
+void hitNote(int);
 
 #endif

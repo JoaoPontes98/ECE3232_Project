@@ -157,14 +157,17 @@ void handleInput(char lane, int inputTime){
     
     if (offset <= (GOOD_THRESHOLD * -1)){
         //Okay & late
+        hitNote(1)
         pBottom->hit = 2;
         pBottom++;
     } else if (offset <= GOOD_THRESHOLD) {
         //Great
+        hitNote(2);
         pBottom->hit = 3;
         pBottom++;
     } else if (offset <= BAD_THRESHOLD) {
         //Okay & early
+        hitNote(1);
         pBottom->hit = 4;
         pBottom++;
     }
