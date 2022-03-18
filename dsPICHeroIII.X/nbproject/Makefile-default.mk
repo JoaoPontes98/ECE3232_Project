@@ -95,38 +95,38 @@ MP_LINKER_FILE_OPTION=,--script=p33CK256MP506.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/b8eaa698d1987699da26142029859e547cbb0b81 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/858d865a464b0323ec61f800269bcb3826c456be .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/38145ab754bbe26fcd2f330fa6ce9541dc4ad4c6 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/3cefb440f22ed37ef583cb461aa93041b40bab49 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/game.o.d 
 	@${RM} ${OBJECTDIR}/game.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  game.c  -o ${OBJECTDIR}/game.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/game.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/e70370215ae4dc826779766a59f2deffdadc926 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/674ede9432c0f371fdb46d5e5107c71db40f3b2a .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/setup.o.d 
 	@${RM} ${OBJECTDIR}/setup.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  setup.c  -o ${OBJECTDIR}/setup.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/setup.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 else
-${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/45730f993767e686f01d377ab1deb5fd9b93de3 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/144ee6641cfcbdf24dec43d87e26266ac58eb620 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/main.o.d 
 	@${RM} ${OBJECTDIR}/main.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/8ad821abcdc6a897c0097d7b6605240dbe4eae47 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/4b58b9245406cbe2effdcff83270918ef0ac5651 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/game.o.d 
 	@${RM} ${OBJECTDIR}/game.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  game.c  -o ${OBJECTDIR}/game.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/game.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
-${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/f76006e2dba19de94b28a4127b6541a0d6b7c2cb .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/774f041045aef3e5e140ba18e862af39bd3d49e .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/setup.o.d 
 	@${RM} ${OBJECTDIR}/setup.o 

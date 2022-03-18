@@ -30,7 +30,7 @@ void incrementStarPower(){
 void missNote(Note* pNote){
     starPower = 0;
     failCount += 1;
-    pNote->hit = HIT_MISS;
+    pNote->hit = 1;
 }
 
 void hitNote(Note* pNote,int score){

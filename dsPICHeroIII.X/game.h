@@ -10,9 +10,7 @@ typedef struct note {
 } Note;
 
 #define HIT_NONE 0
-#define HIT_OK 1
-#define HIT_GOOD 2
-#define HIT_MISS -1
+
 
 void awardPoints(int);
 
