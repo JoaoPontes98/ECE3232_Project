@@ -75,10 +75,6 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
     songTime++;
     
     while(pTop->time < songTime){
-        //handle hit/miss
-        if((songTime - pTop->time > 10) && (pTop->hit == HIT_NONE)){
-            missNote(pTop);
-        }
         pTop++;
     } 
     LAT_SER1 = 0;
@@ -150,7 +146,7 @@ void handleInput(char lane, int inputTime){
 
         if(offset <= (BAD_THRESHOLD * -1)){
             //miss, check again
-            pBottom->hit = 1;
+            missNote(pBottom);
             pBottom++;
         }
     } while (offset <= (BAD_THRESHOLD * -1));
