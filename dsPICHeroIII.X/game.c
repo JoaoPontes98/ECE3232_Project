@@ -33,10 +33,9 @@ void missNote(Note* pNote){
     pNote->hit = 1;
 }
 
-void hitNote(Note* pNote,int score){
+void hitNote(int score){
     incrementStarPower();
     gameScore += score;
-    pNote->hit = score;
 }
 
 char starPowerReady(){

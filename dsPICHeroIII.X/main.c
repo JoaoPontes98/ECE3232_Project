@@ -19,7 +19,7 @@
 
 Note* pTop;
 Note* pBottom;
-int songTime = -8;
+int songTime = 0;
 
 void handleInput(char,int);
 void startTimer();
@@ -53,7 +53,7 @@ int main(void) {
     pBottom = song;
     
     startTimer();
-    while(1){
+    while(songTime < 60){
         Nop();
     }
     return 0;
@@ -97,8 +97,23 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         pTop++;
     }
     LAT_RCLK = 1;
+//    Nop();
+//    Nop();
+//    Nop();
+//    Nop();
+//    Nop();
     LAT_RCLK = 0;
+//    Nop();
+//    Nop();
+//    Nop();
+//    Nop();
+//    Nop();
     LAT_SRCLK = 1;
+//    Nop();
+//    Nop();
+//    Nop();
+//    Nop();
+//    Nop();
     LAT_SRCLK = 0;
 
 //	if (star power ready):
