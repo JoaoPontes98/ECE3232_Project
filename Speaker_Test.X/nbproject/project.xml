@@ -3,8 +3,8 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>Speaker_Test</name>
-            <creation-uuid>dfb59456-4b96-456c-8592-b41ebd07d546</creation-uuid>
+            <name>SpeakerCode</name>
+            <creation-uuid>3ddb9539-eb4c-41d5-974b-dbd59f2473d8</creation-uuid>
             <make-project-type>0</make-project-type>
             <c-extensions>c</c-extensions>
             <cpp-extensions/>

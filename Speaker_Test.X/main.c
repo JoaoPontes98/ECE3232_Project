@@ -1,141 +1,126 @@
-// DSPIC33CK256MP506 Configuration Bit Settings
+// Define FCY for system
+#define FCY 16000000UL
 
-// 'C' source line config statements
+// Trigger = MKbus B pin AN = an_2 = RD10
+// Echo = MKbus B pin RST = rst_2 = RD11
+#define SENSOR_TRIGGER LATDbits.LATD10
+#define SENSOR_ECHO PORTDbits.RD11
 
-// FSEC
-#pragma config BWRP = OFF               // Boot Segment Write-Protect bit (Boot Segment may be written)
-#pragma config BSS = DISABLED           // Boot Segment Code-Protect Level bits (No Protection (other than BWRP))
-#pragma config BSEN = OFF               // Boot Segment Control bit (No Boot Segment)
-#pragma config GWRP = OFF               // General Segment Write-Protect bit (General Segment may be written)
-#pragma config GSS = DISABLED           // General Segment Code-Protect Level bits (No Protection (other than GWRP))
-#pragma config CWRP = OFF               // Configuration Segment Write-Protect bit (Configuration Segment may be written)
-#pragma config CSS = DISABLED           // Configuration Segment Code-Protect Level bits (No Protection (other than CWRP))
-#pragma config AIVTDIS = OFF            // Alternate Interrupt Vector Table bit (Disabled AIVT)
+// Octave LED 1 (Green LED) = MKbus A pin RST = rst_1 = RC7
+// Octave LED 2 (Yellow LED) = MKbus A pin CS = cs_1 = RB2
+#define OCTAVE_LED_1 LATCbits.LATC7
+#define OCTAVE_LED_2 LATBbits.LATB2
 
-// FBSLIM
-#pragma config BSLIM = 0x1FFF           // Boot Segment Flash Page Address Limit bits (Enter Hexadecimal value)
+// Octave Button 1 (Green Button) = MKbus A pin SCK = sck_1 = RB7
+// Octave Button 2 (Yellow Button) = MKbus A pin MISO = miso_1 = RB8
+#define OCTAVE_BUTTON_1 PORTBbits.RB7
+#define OCTAVE_BUTTON_2 PORTBbits.RB8
 
-// FSIGN
+// Volume dial = MKbus A pin AN = an_1 = RC0
+#define VOLUME_DIAL PORTCbits.RC0
 
-// FOSCSEL
-#pragma config FNOSC = FRCDIVN          // Oscillator Source Selection (Internal Fast RC (FRC) Oscillator with postscaler)
-#pragma config IESO = OFF                // Two-speed Oscillator Start-up Enable bit (Start up device with FRC, then switch to user-selected oscillator source)
-
-// FOSC
-#pragma config POSCMD = NONE            // Primary Oscillator Mode Select bits (Primary Oscillator disabled)
-#pragma config OSCIOFNC = OFF           // OSC2 Pin Function bit (OSC2 is clock output)
-#pragma config FCKSM = CSDCMD           // Clock Switching Mode bits (Both Clock switching and Fail-safe Clock Monitor are disabled)
-#pragma config PLLKEN = ON              // PLL Lock Status Control (PLL lock signal will be used to disable PLL clock output if lock is lost)
-#pragma config XTCFG = G3               // XT Config (24-32 MHz crystals)
-#pragma config XTBST = ENABLE           // XT Boost (Boost the kick-start)
-
-// FWDT
-// RWDTPS = No Setting
-#pragma config RCLKSEL = LPRC           // Watchdog Timer Clock Select bits (Always use LPRC)
-#pragma config WINDIS = ON              // Watchdog Timer Window Enable bit (Watchdog Timer operates in Non-Window mode)
-#pragma config WDTWIN = WIN25           // Watchdog Timer Window Select bits (WDT Window is 25% of WDT period)
-// SWDTPS = No Setting
-#pragma config FWDTEN = ON              // Watchdog Timer Enable bit (WDT enabled in hardware)
-
-// FPOR
-#pragma config BISTDIS = DISABLED       // Memory BIST Feature Disable (mBIST on reset feature disabled)
-
-// FICD
-#pragma config ICS = PGD2               // ICD Communication Channel Select bits (Communicate on PGC1 and PGD1)
-#pragma config JTAGEN = OFF             // JTAG Enable bit (JTAG is disabled)
-#pragma config NOBTSWP = DISABLED       // BOOTSWP instruction disable bit (BOOTSWP instruction is disabled)
-
-// FDMTIVTL
-#pragma config DMTIVTL = 0xFFFF         // Dead Man Timer Interval low word (Enter Hexadecimal value)
-
-// FDMTIVTH
-#pragma config DMTIVTH = 0xFFFF         // Dead Man Timer Interval high word (Enter Hexadecimal value)
-
-// FDMTCNTL
-#pragma config DMTCNTL = 0xFFFF         // Lower 16 bits of 32 bit DMT instruction count time-out value (0-0xFFFF) (Enter Hexadecimal value)
-
-// FDMTCNTH
-#pragma config DMTCNTH = 0xFFFF         // Upper 16 bits of 32 bit DMT instruction count time-out value (0-0xFFFF) (Enter Hexadecimal value)
-
-// FDMT
-#pragma config DMTDIS = OFF             // Dead Man Timer Disable bit (Dead Man Timer is Disabled and can be enabled by software)
-
-// FDEVOPT
-#pragma config ALTI2C1 = OFF            // Alternate I2C1 Pin bit (I2C1 mapped to SDA1/SCL1 pins)
-#pragma config ALTI2C2 = OFF            // Alternate I2C2 Pin bit (I2C2 mapped to SDA2/SCL2 pins)
-#pragma config ALTI2C3 = OFF            // Alternate I2C3 Pin bit (I2C3 mapped to SDA3/SCL3 pins)
-#pragma config SMBEN = SMBUS            // SM Bus Enable (SMBus input threshold is enabled)
-#pragma config SPI2PIN = PPS            // SPI2 Pin Select bit (SPI2 uses I/O remap (PPS) pins)
-
-// FALTREG
-#pragma config CTXT1 = OFF              // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 1 bits (Not Assigned)
-#pragma config CTXT2 = OFF              // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 2 bits (Not Assigned)
-#pragma config CTXT3 = OFF              // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 3 bits (Not Assigned)
-#pragma config CTXT4 = OFF              // Specifies Interrupt Priority Level (IPL) Associated to Alternate Working Register 4 bits (Not Assigned)
-
-// FBTSEQ
-#pragma config BSEQ = 0xFFF             // Relative value defining which partition will be active after device Reset; the partition containing a lower boot number will be active (Enter Hexadecimal value)
-#pragma config IBSEQ = 0xFFF            // The one's complement of BSEQ; must be calculated by the user and written during device programming. (Enter Hexadecimal value)
-
-// #pragma config statements should precede project file includes.
-// Use project enums instead of #define for ON and OFF.
-
+// DS = Data Pin = MKbus B pin INT = int_2 = RB15
+// SHCP = Clock pin = MKbus B pin CS = cs_2 = RC3
+// STCP = latch pin = MKbus A pin INT = int_1 = RC14
+#define SHIFT_REG_DATA LATBbits.LATB15
+#define SHIFT_REG_CLOCK LATCbits.LATC3
+#define SHIFT_REG_LATCH LATCbits.LATC14
 
 #include "xc.h"
-#include <time.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-#define FCY 2000000UL
-#define FOSC 4000000UL // FRC divided by 2 from 8MHz to 4MHz
-#define RAND_MAX 4
+#include "libpic30.h"
+#include "math.h"
 
-#include <libpic30.h>
+#pragma config ICS = 2          // set to PGC2/PGD2
+#pragma config FNOSC = PRI      // Oscillator Source Selection (Primary Oscillator (XT, HS, EC))
+#pragma config POSCMD = HS      // Primary Oscillator Mode Select bits (HS Crystal Oscillator Mode)
+
+int sine[] = {
+1843,1958,2073,2188,2301,2412,2521,2627,
+2730,2830,2925,3017,3104,3186,3262,3333,
+3398,3457,3510,3556,3595,3627,3652,3670,
+3681,3685,3681,3670,3652,3627,3595,3556,
+3510,3457,3398,3333,3262,3186,3104,3017,
+2925,2830,2730,2627,2521,2412,2301,2188,
+2073,1958,1843,1727,1612,1497,1384,1273,
+1164,1058,955,855,760,668,581,499,
+423,352,287,228,175,129,90,58,
+33,15,4,0,4,15,33,58,
+90,129,175,228,287,352,423,499,
+581,668,760,855,955,1058,1164,1273,
+1384,1497,1612,1727,1843
+}; // size 100
 
 int main(void) {
-    setupSpeaker();
-    TRISCbits.TRISC15 = 1; //RX1 = btn input
-    TRISBbits.TRISB14 = 0; //RX2 = led output
+    //setupSpeaker();
+    setupSpeaker2();
     
+    TRISBbits.TRISB15 = 1; //INT2 = Green btn
+    TRISBbits.TRISB14 = 1;//RX2 = yellow Btn
+    TRISBbits.TRISB13 = 1;//TX2 = red Btn
+    
+    make_note(0);
+    make_note(1);
+    make_note(2);
     while(1){
-        if(PORTCbits.RC15 == 0){
-            LATDbits.LATD15 = 1;
-            LATBbits.LATB14 = 1;
-        }else{
-            LATDbits.LATD15 = 0;
-            LATBbits.LATB14 = 0;
+        if(PORTBbits.RB15 == 0){
+            //LATBbits.LATB14 = 1;
+            make_note(0);
+        }else if(PORTBbits.RB14 == 0){
+            //LATBbits.LATB14 = 1;
+            make_note(1);
+        }else if(PORTBbits.RB13 == 0){
+            //LATDbits.LATD15 = 0;
+            make_note(2);
         }
-//        LATDbits.LATD15 = 1;
-//        __delay_ms(1000);
-//        LATDbits.LATD15 = 0;
     }
     
     return 0;
 }
-void setupSpeaker()
-{
-    //Speaker
-    TRISDbits.TRISD15 = 0; //D15 is output (Speaker)
-    
-    //Configure the source clock for the APLL
-    ACLKCON1bits.FRCSEL = 1;
-    // Configure the APLL prescalar, APLL feedback divider, and both APLL postscalars
-    ACLKCON1bits.APLLPRE = 1; //N1 = 1
-    APLLFBD1bits.APLLFBDIV = 125; // M = 125
-    APLLDIV1bits.APOST1DIV = 2; // N2 = 2
-    APLLDIV1bits.APOST2DIV = 1; // N3 = 1
-    // Enable APLL
-    ACLKCON1bits.APLLEN = 1;
-    
-    //DAC
-    DACCTRL1Lbits.CLKSEL = 2;
+
+void setupSpeaker2(){
+    // setting registers for speaker
+    // set pin RD15 to an output - spk_enable = output
+    TRISDbits.TRISD15 = 0;
+    // A3 is speaker output
+    TRISAbits.TRISA3 = 0;
+    // enable speaker
+    LATDbits.LATD15 = 1;
+    // Enable DAC modules
     DACCTRL1Lbits.DACON = 1;
+    //set clock for DAC, 2 for PLL
+    DACCTRL1Lbits.CLKSEL = 11;
+    //set no division for clock
+    DACCTRL1Lbits.CLKDIV = 00;
+    // Enable DAC 1
     DAC1CONLbits.DACEN = 1;
+    // Enable DAC 1 output buffer
     DAC1CONLbits.DACOEN = 1;
-    //Triangle Wave mode
-    DAC1DATLbits.DACLOW = 0xCD; // Lower data value
-    DAC1DATHbits.DACDAT = 0xF32; // Upper data value
-    SLP1DATbits.SLPDAT = 0x1; // Slope rate, counts per step
-    SLP1CONHbits.TWME = 1;
-    SLP1CONHbits.SLOPEN = 1;
+}
+
+void make_note(int noteNum){
+    int vol_divider = 1;
+    
+    int notes[] = {1224,917,612};
+    int cycles = notes[noteNum];
+    
+    //length of note
+    int x = 16000/cycles;
+    
+    x = x*10;
+    
+    int count = 0;
+    int i = 0;
+    while(count <= x){
+        for (i = 0; i<=99; i++){
+         DAC1DATHbits.DACDATH = (sine[i])+205;
+        // argument of delay is cycles, f = 16Mhz/(100*cycles), the {-50} is a
+        // correction factor to account for the clock cycles for all instructions
+        // in the loop, and is subject to change if any instructions in loop change. 
+        // Octave is either 1 or 2, dividing cycles by 2 in delay
+        // function doubles the frequency.
+         __delay32(cycles-50); 
+        } // end for
+        i = 0;
+        count++;
+    } // end while 1
 }
