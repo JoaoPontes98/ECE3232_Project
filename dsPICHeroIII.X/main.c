@@ -31,6 +31,9 @@ int main(void) {
     setupInterrupts();
     setupJoystick();
     
+    //CS_1 --> blue LED
+    TRISBbits.TRISB2=0;
+    
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
         {.lane = 2, .time = 0 , .freq = E4, .hit = 0},
@@ -55,10 +58,20 @@ int main(void) {
     pBottom = song;
     
     startTimer();
-    while(songTime < 60){
-        Nop();
+//    while(songTime < 60){
+//        Nop();
+//    }
+    while(1){
+        x_value=get_joystick_x();
+        y_value=get_joystick_y();
+
+        if(x_value>1 && y_value>1 ){
+            LATBbits.LATB2=1;
+        }
+        else{
+            LATBbits.LATB2=0;
+        }    
     }
-   
     return 0;
 }
 

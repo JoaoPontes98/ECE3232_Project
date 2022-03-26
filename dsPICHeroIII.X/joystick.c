@@ -42,3 +42,16 @@ int get_joystick_y(){
     ADC1_Disable();
     return y_value;
 }
+
+// Function to get the whammy scaling factor to modulate the note frequency
+// will translate y axis value from 0-4095 to a proportional value 0.5-1.5
+double get_whammy_value(int input){
+    int y_max=4095;
+    int y_min=0;
+    int mod_max=1.5;
+    int mod_min=0.5;
+    
+    double slope = (y_max-y_min) / (mod_max - mod_min);
+    double output=mod_min+slope*(input-y_min);
+    return output;
+}
