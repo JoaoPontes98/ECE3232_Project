@@ -5,4 +5,5 @@ void setupTimer();
 void setupInterrupts();
 void setupSccp();
 void setupPins();
+void setupJoystick();
 #endif

@@ -13,6 +13,7 @@
 #include "game.h"
 #include "setup.h"
 #include "timing.h"
+#include "joystick.h"
 #define FCY 16000000UL
 
 #define SONG_LENGTH 17
@@ -20,7 +21,7 @@
 Note* pTop;
 Note* pBottom;
 int songTime = 0;
-
+int x_value, y_value;
 void handleInput(char,int);
 void startTimer();
 
@@ -28,6 +29,7 @@ int main(void) {
     setupPins();
     setupTimer();
     setupInterrupts();
+    setupJoystick();
     
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
@@ -56,6 +58,7 @@ int main(void) {
     while(songTime < 60){
         Nop();
     }
+   
     return 0;
 }
 

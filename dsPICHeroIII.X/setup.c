@@ -7,6 +7,7 @@
 
 #include "setup.h"
 #include "ledpins.h"
+#include "mcc_generated_files/adc1.h"
 #include "timing.h"
 void setupSccp() {
     
@@ -55,4 +56,16 @@ void setupTimer(){
     T1CON = 0x0326;
     // 1 timer count = 0.000008s
     PR1 = QUARTER_BEAT;        //0.125s
+}
+
+// Function will set up the joystick and the adc so that functions in joystick.c can be used
+void setupJoystick(){
+    ADC1_Initialize();
+    
+     // x_axis
+    ANSELDbits.ANSELD10 = 1; 
+    TRISDbits.TRISD10 = 1;
+    // y_axis
+    ANSELDbits.ANSELD11 = 1; 
+    TRISDbits.TRISD11 = 1;
 }
