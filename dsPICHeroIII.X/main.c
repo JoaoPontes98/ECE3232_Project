@@ -11,9 +11,10 @@
 #include "config.h"
 #include "ledpins.h"
 #include "game.h"
+#include "speaker.h"
+#include "joystick.h"
 #include "setup.h"
 #include "timing.h"
-#include "joystick.h"
 #define FCY 16000000UL
 
 #define SONG_LENGTH 17
@@ -30,6 +31,7 @@ int main(void) {
     setupTimer();
     setupInterrupts();
     setupJoystick();
+    setupSpeaker();
    
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
@@ -54,10 +56,41 @@ int main(void) {
     pTop = song;
     pBottom = song;
     
-    startTimer();
-    while(songTime < 60){
-        Nop();
+//    startTimer();
+    //______________________
+    make_note(0,1);
+    make_note(1,1);
+    make_note(2,1);
+    TRISCbits.TRISC3=0;
+    
+
+    while(1){
+        x_value=get_joystick_x();
+        y_value=get_joystick_y();
+        
+        if(x_value>3100){
+            LATCbits.LATC3=1;
+        }
+        else{
+           LATCbits.LATC3=0;
+  
+        }
+        if(PORTBbits.RB15 == 0){
+            //LATBbits.LATB14 = 1;
+            make_note(0,y_value);
+        }else if(PORTBbits.RB14 == 0){
+            //LATBbits.LATB14 = 1;
+            make_note(1,y_value);
+        }else if(PORTBbits.RB13 == 0){
+            //LATDbits.LATD15 = 0;
+            make_note(2,y_value);
+        }
     }
+    //______________________
+
+//    while(songTime < 60){
+//        Nop();
+//    }
     return 0;
 }
 
