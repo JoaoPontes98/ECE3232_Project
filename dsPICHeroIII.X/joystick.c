@@ -48,8 +48,8 @@ int get_joystick_y(){
 double get_whammy_value(int input){
     int y_max=4095;
     int y_min=0;
-    int mod_max=1.2;
-    int mod_min=0.8;
+    int mod_max=1.5;
+    int mod_min=0.5;
     
     double slope = (y_max-y_min) / (mod_max - mod_min);
     double output=mod_min+slope*(input-y_min);

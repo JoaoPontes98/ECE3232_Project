@@ -34,12 +34,6 @@ void setupPins() {
     LAT_RCLK = 0;
     LAT_SRCLK = 0;
     LAT_SRCLR = 1;
-    
-    //Speaker test pins Just for now
-    TRISBbits.TRISB15 = 1; //INT2 = Green btn
-    TRISBbits.TRISB14 = 1;//RX2 = yellow Btn
-    TRISBbits.TRISB13 = 1;//TX2 = red Btn
-    TRISBbits.TRISB12 = 1;//TX2 = blue Btn
 }
 
 void setupInterrupts(){
@@ -74,24 +68,4 @@ void setupJoystick(){
     // y_axis
     ANSELDbits.ANSELD11 = 1; 
     TRISDbits.TRISD11 = 1;
-}
-
-void setupSpeaker(){
-   // setting registers for speaker
-   // set pin RD15 to an output - spk_enable = output
-   TRISDbits.TRISD15 = 0;
-   // A3 is speaker output
-   TRISAbits.TRISA3 = 0;
-   // enable speaker
-   LATDbits.LATD15 = 1;
-   // Enable DAC modules
-   DACCTRL1Lbits.DACON = 1;
-   //set clock for DAC, 2 for PLL
-   DACCTRL1Lbits.CLKSEL = 11;
-   //set no division for clock
-   DACCTRL1Lbits.CLKDIV = 00;
-   // Enable DAC 1
-   DAC1CONLbits.DACEN = 1;
-   // Enable DAC 1 output buffer
-   DAC1CONLbits.DACOEN = 1;
 }

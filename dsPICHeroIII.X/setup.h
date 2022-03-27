@@ -6,5 +6,4 @@ void setupInterrupts();
 void setupSccp();
 void setupPins();
 void setupJoystick();
-void setupSpeaker();
 #endif
