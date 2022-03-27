@@ -14,6 +14,7 @@
 #include "setup.h"
 #include "timing.h"
 #include "joystick.h"
+#include "speaker.h"
 #define FCY 16000000UL
 
 #define SONG_LENGTH 17
@@ -21,7 +22,7 @@
 Note* pTop;
 Note* pBottom;
 int songTime = 0;
-int x_value, y_value;
+int x_value, y_value, modulate;
 void handleInput(char,int);
 void startTimer();
 
@@ -30,7 +31,8 @@ int main(void) {
     setupTimer();
     setupInterrupts();
     setupJoystick();
-   
+    setupSpeaker();
+    
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
         {.lane = 2, .time = 0 , .freq = E4, .hit = 0},
@@ -53,10 +55,30 @@ int main(void) {
      };
     pTop = song;
     pBottom = song;
-    
     startTimer();
-    while(songTime < 60){
-        Nop();
+//    while(songTime < 60){
+//        Nop();
+//    }
+    
+    //test button and led
+    TRISBbits.TRISB15 = 1; //INT2 = Green btn
+    TRISBbits.TRISB14 = 1;//RX2 = yellow Btn
+    TRISBbits.TRISB13 = 1;//TX2 = red Btn
+    //_________________________
+   
+    
+
+    while(1){
+    if(PORTBbits.RB15 == 0){
+        //LATBbits.LATB14 = 1;
+        make_note(0);
+    }else if(PORTBbits.RB14 == 0){
+        //LATBbits.LATB14 = 1;
+        make_note(1);
+    }else if(PORTBbits.RB13 == 0){
+        //LATDbits.LATD15 = 0;
+        make_note(2);
+    }
     }
     return 0;
 }

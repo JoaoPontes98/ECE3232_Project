@@ -57,17 +57,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=main.c game.c setup.c mcc_generated_files/mcc.c mcc_generated_files/traps.c mcc_generated_files/pin_manager.c mcc_generated_files/system.c mcc_generated_files/reset.c mcc_generated_files/adc1.c mcc_generated_files/clock.c mcc_generated_files/interrupt_manager.c joystick.c
+SOURCEFILES_QUOTED_IF_SPACED=mcc_generated_files/mcc.c mcc_generated_files/traps.c mcc_generated_files/pin_manager.c mcc_generated_files/system.c mcc_generated_files/reset.c mcc_generated_files/adc1.c mcc_generated_files/clock.c mcc_generated_files/interrupt_manager.c main.c game.c setup.c joystick.c speaker.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.o ${OBJECTDIR}/game.o ${OBJECTDIR}/setup.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/reset.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/joystick.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.o.d ${OBJECTDIR}/game.o.d ${OBJECTDIR}/setup.o.d ${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/traps.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/reset.o.d ${OBJECTDIR}/mcc_generated_files/adc1.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/joystick.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/reset.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/main.o ${OBJECTDIR}/game.o ${OBJECTDIR}/setup.o ${OBJECTDIR}/joystick.o ${OBJECTDIR}/speaker.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/mcc_generated_files/mcc.o.d ${OBJECTDIR}/mcc_generated_files/traps.o.d ${OBJECTDIR}/mcc_generated_files/pin_manager.o.d ${OBJECTDIR}/mcc_generated_files/system.o.d ${OBJECTDIR}/mcc_generated_files/reset.o.d ${OBJECTDIR}/mcc_generated_files/adc1.o.d ${OBJECTDIR}/mcc_generated_files/clock.o.d ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/game.o.d ${OBJECTDIR}/setup.o.d ${OBJECTDIR}/joystick.o.d ${OBJECTDIR}/speaker.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.o ${OBJECTDIR}/game.o ${OBJECTDIR}/setup.o ${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/reset.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/joystick.o
+OBJECTFILES=${OBJECTDIR}/mcc_generated_files/mcc.o ${OBJECTDIR}/mcc_generated_files/traps.o ${OBJECTDIR}/mcc_generated_files/pin_manager.o ${OBJECTDIR}/mcc_generated_files/system.o ${OBJECTDIR}/mcc_generated_files/reset.o ${OBJECTDIR}/mcc_generated_files/adc1.o ${OBJECTDIR}/mcc_generated_files/clock.o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o ${OBJECTDIR}/main.o ${OBJECTDIR}/game.o ${OBJECTDIR}/setup.o ${OBJECTDIR}/joystick.o ${OBJECTDIR}/speaker.o
 
 # Source Files
-SOURCEFILES=main.c game.c setup.c mcc_generated_files/mcc.c mcc_generated_files/traps.c mcc_generated_files/pin_manager.c mcc_generated_files/system.c mcc_generated_files/reset.c mcc_generated_files/adc1.c mcc_generated_files/clock.c mcc_generated_files/interrupt_manager.c joystick.c
+SOURCEFILES=mcc_generated_files/mcc.c mcc_generated_files/traps.c mcc_generated_files/pin_manager.c mcc_generated_files/system.c mcc_generated_files/reset.c mcc_generated_files/adc1.c mcc_generated_files/clock.c mcc_generated_files/interrupt_manager.c main.c game.c setup.c joystick.c speaker.c
 
 
 
@@ -95,24 +95,6 @@ MP_LINKER_FILE_OPTION=,--script=p33CK256MP506.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/5c48952239c922e628e2b4ba8af0f6b47c16557d .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/aaa02bc8f80b9bd8ed3c8f62169dd9651515e7b0 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/game.o.d 
-	@${RM} ${OBJECTDIR}/game.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  game.c  -o ${OBJECTDIR}/game.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/game.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/b908106db848355e43d2e3ace31a9edcfaf182a6 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/setup.o.d 
-	@${RM} ${OBJECTDIR}/setup.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  setup.c  -o ${OBJECTDIR}/setup.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/setup.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/mcc_generated_files/mcc.o: mcc_generated_files/mcc.c  .generated_files/flags/default/633fb25fd087b5a6ce257c740b00369f15c6d997 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
 	@${RM} ${OBJECTDIR}/mcc_generated_files/mcc.o.d 
@@ -161,31 +143,37 @@ ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o: mcc_generated_files/interr
 	@${RM} ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  mcc_generated_files/interrupt_manager.c  -o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/5c48952239c922e628e2b4ba8af0f6b47c16557d .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/aaa02bc8f80b9bd8ed3c8f62169dd9651515e7b0 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/game.o.d 
+	@${RM} ${OBJECTDIR}/game.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  game.c  -o ${OBJECTDIR}/game.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/game.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/b908106db848355e43d2e3ace31a9edcfaf182a6 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/setup.o.d 
+	@${RM} ${OBJECTDIR}/setup.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  setup.c  -o ${OBJECTDIR}/setup.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/setup.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 ${OBJECTDIR}/joystick.o: joystick.c  .generated_files/flags/default/4d3d217e819ae3f2bf3af0b13b0f120c7473d20 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/joystick.o.d 
 	@${RM} ${OBJECTDIR}/joystick.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  joystick.c  -o ${OBJECTDIR}/joystick.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/joystick.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/speaker.o: speaker.c  .generated_files/flags/default/e4d5299a29a88f30d3bbc4ec4110b4fbcdcacd39 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/speaker.o.d 
+	@${RM} ${OBJECTDIR}/speaker.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  speaker.c  -o ${OBJECTDIR}/speaker.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/speaker.o.d"      -g -D__DEBUG   -mno-eds-warn  -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 else
-${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/30ccfcb088d807614c63ef42c1300e081a2a8ebc .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/main.o.d 
-	@${RM} ${OBJECTDIR}/main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/950bd34633596669273c6461f8f9d29dea964dc4 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/game.o.d 
-	@${RM} ${OBJECTDIR}/game.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  game.c  -o ${OBJECTDIR}/game.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/game.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
-${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/4be3f2197250dff63aef6efb59491d8608f0850a .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
-	@${MKDIR} "${OBJECTDIR}" 
-	@${RM} ${OBJECTDIR}/setup.o.d 
-	@${RM} ${OBJECTDIR}/setup.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  setup.c  -o ${OBJECTDIR}/setup.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/setup.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
-	
 ${OBJECTDIR}/mcc_generated_files/mcc.o: mcc_generated_files/mcc.c  .generated_files/flags/default/9b8b5c2aafb3ddb4b3affd9b8d55079e9daa7c1c .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}/mcc_generated_files" 
 	@${RM} ${OBJECTDIR}/mcc_generated_files/mcc.o.d 
@@ -234,11 +222,35 @@ ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o: mcc_generated_files/interr
 	@${RM} ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  mcc_generated_files/interrupt_manager.c  -o ${OBJECTDIR}/mcc_generated_files/interrupt_manager.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/mcc_generated_files/interrupt_manager.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
+${OBJECTDIR}/main.o: main.c  .generated_files/flags/default/30ccfcb088d807614c63ef42c1300e081a2a8ebc .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/main.o.d 
+	@${RM} ${OBJECTDIR}/main.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  main.c  -o ${OBJECTDIR}/main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/main.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/game.o: game.c  .generated_files/flags/default/950bd34633596669273c6461f8f9d29dea964dc4 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/game.o.d 
+	@${RM} ${OBJECTDIR}/game.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  game.c  -o ${OBJECTDIR}/game.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/game.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/setup.o: setup.c  .generated_files/flags/default/4be3f2197250dff63aef6efb59491d8608f0850a .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/setup.o.d 
+	@${RM} ${OBJECTDIR}/setup.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  setup.c  -o ${OBJECTDIR}/setup.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/setup.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
 ${OBJECTDIR}/joystick.o: joystick.c  .generated_files/flags/default/f08d1d2901915232ad92635ceed575e9f474cf44 .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
 	@${MKDIR} "${OBJECTDIR}" 
 	@${RM} ${OBJECTDIR}/joystick.o.d 
 	@${RM} ${OBJECTDIR}/joystick.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  joystick.c  -o ${OBJECTDIR}/joystick.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/joystick.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
+	
+${OBJECTDIR}/speaker.o: speaker.c  .generated_files/flags/default/770f0df9d201743a1244be9bae0f0a5e034c59df .generated_files/flags/default/70f944974e314670fe1f01b32882fb0ad7935d3e
+	@${MKDIR} "${OBJECTDIR}" 
+	@${RM} ${OBJECTDIR}/speaker.o.d 
+	@${RM} ${OBJECTDIR}/speaker.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  speaker.c  -o ${OBJECTDIR}/speaker.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MP -MMD -MF "${OBJECTDIR}/speaker.o.d"      -mno-eds-warn  -g -omf=elf -DXPRJ_default=$(CND_CONF)    $(COMPARISON_BUILD)  -O0 -msmart-io=1 -Wall -msfr-warn=off    -mdfp="${DFP_DIR}/xc16"
 	
 endif
 
@@ -281,11 +293,3 @@ endif
 .clean-conf: ${CLEAN_SUBPROJECTS}
 	${RM} -r ${OBJECTDIR}
 	${RM} -r ${DISTDIR}
-
-# Enable dependency checking
-.dep.inc: .depcheck-impl
-
-DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
-ifneq (${DEPFILES},)
-include ${DEPFILES}
-endif

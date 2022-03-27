@@ -35,8 +35,6 @@ int main(void) {
     TRISBbits.TRISB12 = 1;//TX2 = blue Btn
     
     make_note(0);
-    make_note(1);
-    make_note(2);
     while(1){
         if(PORTBbits.RB15 == 0){
             //LATBbits.LATB14 = 1;
