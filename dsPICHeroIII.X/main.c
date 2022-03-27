@@ -59,7 +59,8 @@ int main(void) {
 //    while(songTime < 60){
 //        Nop();
 //    }
-    
+
+// SPEAKER AND WHAMMY TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     //test button and led
     TRISBbits.TRISB15 = 1; //INT2 = Green btn
     TRISBbits.TRISB14 = 1;//RX2 = yellow Btn
@@ -69,17 +70,19 @@ int main(void) {
     
 
     while(1){
-    if(PORTBbits.RB15 == 0){
-        //LATBbits.LATB14 = 1;
-        make_note(0);
-    }else if(PORTBbits.RB14 == 0){
-        //LATBbits.LATB14 = 1;
-        make_note(1);
-    }else if(PORTBbits.RB13 == 0){
-        //LATDbits.LATD15 = 0;
-        make_note(2);
+        if(PORTBbits.RB15 == 0){
+            //LATBbits.LATB14 = 1;
+            make_note(0);
+        }else if(PORTBbits.RB14 == 0){
+            //LATBbits.LATB14 = 1;
+            make_note(1);
+        }else if(PORTBbits.RB13 == 0){
+            //LATDbits.LATD15 = 0;
+            make_note(2);
+        }
     }
-    }
+// SPEAKER AND WHAMMY TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
     return 0;
 }
 
