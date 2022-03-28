@@ -9,11 +9,17 @@
 #include "ledpins.h"
 #include "mcc_generated_files/adc1.h"
 #include "timing.h"
-void setupSccp() {
-    
-    //Input Capture Mode
+#include "MPU.h"
+void setupSccp() {    
+    // Output compare (timer 2)
+    CCP1CON1L = 0x0000;
     CCP1CON1H = 0x4080;
-    CCP1CON1L = 0x80B1;
+    CCP1TMRL = 0;
+    CCP1PRL = 0x0160;
+    
+//    //Input Capture Mode
+//    CCP1CON1H = 0x4080;
+//    CCP1CON1L = 0x80B1;
 
 }
 
@@ -24,10 +30,15 @@ void setupPins() {
     TRIS_RCLK = TRIS_OUT;
     TRIS_SRCLK = TRIS_OUT;
     TRIS_SRCLR = TRIS_OUT;
+    TRIS_SP = TRIS_OUT;   
     ANSEL_SER1 = 0;
     ANSEL_SER2 = 0;
     ANSEL_SER3 = 0;
+    
+    
+    ANSELBbits.ANSELB2 = 0;     //LAT0
     LAT_SRCLR = 0;
+    LAT_SP = 1;
     LAT_SER1 = 0;
     LAT_SER2 = 0;
     LAT_SER3 = 0;
@@ -41,8 +52,14 @@ void setupInterrupts(){
     IPC0bits.T1IP = 5;
     IEC0bits.T1IE = 1;
     //External interrupts (INT0, INT1, INT2)
+    IFS0bits.INT0IF = 0;
     IPC0bits.INT0IP = 6;
     IEC0bits.INT0IE = 1;
+    
+    //SCCP (Timer 2) Interrupts
+//    IPC1bits.CCP1IP = 4;
+//    IEC0bits.CCP1IE = 1;
+//    IFS0bits.CCP1IF = 0;
 }
 
 void setupTimer(){

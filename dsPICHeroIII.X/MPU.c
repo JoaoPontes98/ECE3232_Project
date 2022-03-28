@@ -8,13 +8,13 @@
 
 #include "xc.h"
 #include "MPU.h"
-#include "config.h"
+#define FCY 16000000UL
 #include <libpic30.h>
-int main(void){
-setup_MPU();
-MPU_READ();
-
-}
+//int main(void){
+//setup_MPU();
+//MPU_READ();
+//
+//}
 
 int MPU_READ(void){
     int buffer1 = 0;

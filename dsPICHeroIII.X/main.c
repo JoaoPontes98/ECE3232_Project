@@ -5,7 +5,7 @@
  * Created on February 26, 2022, 11:56 PM
  */
 
-
+#define FCY 16000000UL
 #include "xc.h"
 #include <libpic30.h>
 #include "config.h"
@@ -14,7 +14,8 @@
 #include "setup.h"
 #include "timing.h"
 #include "joystick.h"
-#define FCY 16000000UL
+#include "MPU.h"
+
 
 #define SONG_LENGTH 17
 
@@ -22,6 +23,10 @@ Note* pTop;
 Note* pBottom;
 int songTime = 0;
 int x_value, y_value;
+int sine_i = 0;
+int sine_count = 0;
+int sine_cycles;
+int gyro_flag = 0;
 void handleInput(char,int);
 void startTimer();
 
@@ -30,6 +35,8 @@ int main(void) {
     setupTimer();
     setupInterrupts();
     setupJoystick();
+    __delay_ms(30);
+    setup_MPU();
    
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
@@ -51,12 +58,23 @@ int main(void) {
         {.lane = 1, .time = 52, .freq = D4, .hit = 0 },
         {.lane = 0, .time = 56, .freq = C4, .hit = 0 }
      };
-    pTop = song;
-    pBottom = song;
+    while(1){
+        songTime = 0;
     
-    startTimer();
-    while(songTime < 60){
-        Nop();
+        pTop = song;
+        pBottom = song;
+
+        startTimer();
+        while(songTime < 65){
+            Nop();
+            
+            //Poll gyro
+            //Log max gryo value since last interrupt
+            if(MPU_READ() == 1){
+                gyro_flag = 1;
+            }
+            
+        }
     }
     return 0;
 }
@@ -99,29 +117,24 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         pTop++;
     }
     LAT_RCLK = 1;
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
     LAT_RCLK = 0;
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
+
     LAT_SRCLK = 1;
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
     LAT_SRCLK = 0;
 
 //	if (star power ready):
 //		Check MPU
 //		if(Star power ok):
 //			transition to star power
+    if(gyro_flag == 1){
+        //Star power LED on
+        LATBbits.LATB12 = 0;
+        
+    } else {
+        LATBbits.LATB12 = 1;
+        //Star power LED off
+    }
+    gyro_flag = 0;
     
     IFS0bits.T1IF = 0;
 }
@@ -130,17 +143,22 @@ void __attribute__((__interrupt__(auto_psv))) _INT0Interrupt(void) {
     int inputTime = TMR1;
     
     handleInput(0,inputTime);
+    
+    IFS0bits.INT0IF = 0;
 }
 void __attribute__((__interrupt__(auto_psv))) _INT1Interrupt(void) {
     int inputTime = TMR1;
     
     handleInput(1,inputTime);
+    
+    IFS0bits.INT1IF = 0;
 }
 
 void __attribute__((__interrupt__(auto_psv))) _INT2Interrupt(void) {
     int inputTime = TMR1;
     
     handleInput(2,inputTime);
+    IFS1bits.INT2IF = 0;
 }
 
 void handleInput(char lane, int inputTime){
@@ -151,12 +169,12 @@ void handleInput(char lane, int inputTime){
     //  Award points
     //Take earliest note possible
     
-    int offset;
+    long offset;
     do {
-        int timeDiff = pBottom->time - songTime;
+        int timeDiff = 8 + pBottom->time - songTime;
         //filter out all that can't possibly be hits (too late)
         if(timeDiff < 0) {
-            offset = inputTime - QUARTER_BEAT + (timeDiff * QUARTER_BEAT);
+            offset = inputTime - QUARTER_BEAT + ((long)timeDiff * QUARTER_BEAT);
         } else {
             offset = inputTime + (timeDiff * QUARTER_BEAT);
         }
@@ -190,3 +208,8 @@ void handleInput(char lane, int inputTime){
     }
 
 }
+
+//void __attribute__((__interrupt__(auto_psv))) _CCP1Interrupt(void) {
+//
+//    IFS0bits.CCP1IF = 0;
+//}

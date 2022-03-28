@@ -33,23 +33,32 @@
 
 #include <xc.h> // include processor files - each processor file is guarded.  
 
+//TRIS value definitions
 #define TRIS_OUT 0
 #define TRIS_IN 1
+
+//TRIS pin mappings (in/out)
 #define TRIS_SER1 TRISCbits.TRISC3
 #define TRIS_SER2 TRISCbits.TRISC2
 #define TRIS_SER3 TRISCbits.TRISC1
 #define TRIS_RCLK TRISBbits.TRISB13
 #define TRIS_SRCLK TRISBbits.TRISB14
 #define TRIS_SRCLR TRISBbits.TRISB15
+#define TRIS_SP     TRISBbits.TRISB12
+
+//Analog Select pin mappings
 #define ANSEL_SER1 ANSELCbits.ANSELC1
 #define ANSEL_SER2 ANSELCbits.ANSELC2
 #define ANSEL_SER3 ANSELCbits.ANSELC3
+
+//Latch pin mappings
 #define LAT_SER1 LATCbits.LATC3
 #define LAT_SER2 LATCbits.LATC2
 #define LAT_SER3 LATCbits.LATC1
 #define LAT_RCLK LATBbits.LATB13
 #define LAT_SRCLK LATBbits.LATB14
 #define LAT_SRCLR LATBbits.LATB15
+#define LAT_SP    LATBbits.LATB12
 
 #endif	/* XC_HEADER_TEMPLATE_H */
 
