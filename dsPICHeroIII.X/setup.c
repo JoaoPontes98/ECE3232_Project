@@ -36,6 +36,26 @@ void setupPins() {
     LAT_SRCLR = 1;
 }
 
+void setupDigital(){
+    //LEDS~~~~~~~~~~~~~~~~~~~~~~~~~
+    //RC12 = redLED
+    TRISCbits.TRISC12=0;
+    //RC6 = yellow LED
+    TRISCbits.TRISC6=0;
+    //RC7 = green LED
+    TRISCbits.TRISC7=0;
+    //RB12 = star power LED's
+    TRISBbits.TRISB12 = 0;
+    
+    //BUTTONS~~~~~~~~~~~~~~~~~~~~~~~
+    //RB7 = red button
+    TRISBbits.TRISB7 = 1;
+    //RB8 = yellow button
+    TRISBbits.TRISB8 = 1;
+    //RB9 = green button
+    TRISBbits.TRISB9 = 1;
+}
+
 void setupInterrupts(){
     //Timer interrupts
     IPC0bits.T1IP = 5;
@@ -62,10 +82,10 @@ void setupTimer(){
 void setupJoystick(){
     ADC1_Initialize();
     
-     // x_axis
+     // RD10 = x_axis
     ANSELDbits.ANSELD10 = 1; 
     TRISDbits.TRISD10 = 1;
-    // y_axis
+    // RD11 = y_axis
     ANSELDbits.ANSELD11 = 1; 
     TRISDbits.TRISD11 = 1;
 }
