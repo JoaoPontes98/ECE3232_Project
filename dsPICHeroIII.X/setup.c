@@ -5,6 +5,8 @@
  * Created on March 18, 2022, 12:57 AM
  */
 
+#include <p33CK256MP506.h>
+
 #include "setup.h"
 #include "ledpins.h"
 #include "mcc_generated_files/adc1.h"
@@ -26,7 +28,10 @@ void setupPins() {
     TRIS_SRCLR = TRIS_OUT;
     ANSEL_SER1 = 0;
     ANSEL_SER2 = 0;
-    ANSEL_SER3 = 0;
+    ANSEL_SER3 = 0;  
+    ANSELBbits.ANSELB2 = 0;     //INT0
+    ANSELBbits.ANSELB8 = 0;     //INT1
+    ANSELBbits.ANSELB9 = 0;     //INT2
     LAT_SRCLR = 0;
     LAT_SER1 = 0;
     LAT_SER2 = 0;
@@ -63,6 +68,20 @@ void setupInterrupts(){
     //External interrupts (INT0, INT1, INT2)
     IPC0bits.INT0IP = 6;
     IEC0bits.INT0IE = 1;
+    IFS0bits.INT1IF = 0;
+    IPC3bits.INT1IP = 6;
+    IEC0bits.INT1IE = 1;
+    IFS1bits.INT2IF = 0;
+    IPC5bits.INT2IP = 6;
+    IEC1bits.INT2IE = 1;
+    
+    RPINR0bits.INT1R = 40;
+    RPINR1bits.INT2R = 41;
+    
+    //SCCP (Timer 2) Interrupts
+//    IPC1bits.CCP1IP = 4;
+//    IEC0bits.CCP1IE = 1;
+//    IFS0bits.CCP1IF = 0;
 }
 
 void setupTimer(){
