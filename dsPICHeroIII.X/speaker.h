@@ -77,6 +77,7 @@ static int sine25[] = {
 
 void setupSpeaker();
 void make_note(int noteNum);
+int buttonIsPressed();
 
 
 #endif	/* SPEAKER_H */

@@ -27,9 +27,15 @@ int gyro_flag = 0;
 int x_value, y_value, modulate;
 void handleInput(char,int);
 void startTimer();
+void homeState();
+void playGame();
+
+int isGameOn = 0;
 int goodLedTimer = 0;
 int okayLedTimer = 0;
 int missLedTimer = 0;
+int totalMissed = 0;
+int comboNotes = 0;
 
 int main(void) {
     setupPins();
@@ -38,10 +44,41 @@ int main(void) {
     setupJoystick();
     setupSpeaker();
     setupDigital();
-//    __delay_ms(30);
     setup_MPU();
 
+    // Main Game loop
+    while(1){
+        homeState();
+        playGame();
+    }
+
+    return 0;
+}
+
+// Run when waiting to start game
+void homeState(){
+    // Turn all LEDs on
+    LATCbits.LATC12 = 1;
+    LATCbits.LATC6 = 1;
+    LATCbits.LATC7 = 1;
     
+    while(1){
+        if((PORTBbits.RB2 == 0 || PORTBbits.RB8 == 0)
+          ||PORTBbits.RB9 == 0){ // any button is pressed
+            //turn off all LEDs
+            LATCbits.LATC12 = 0;
+            LATCbits.LATC6 = 0;
+            LATCbits.LATC7 = 0;
+            
+            break;
+        }
+    }
+    
+    return;
+}
+
+void playGame(){
+    isGameOn = 1;
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
         {.lane = 2, .time = 0 , .freq = E4, .hit = 0},
@@ -65,45 +102,22 @@ int main(void) {
     pTop = song;
     pBottom = song;
     startTimer();
-//    while(songTime < 60){
-//        Nop();
-//    }
     
-// TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    while(1){
-        if(PORTBbits.RB2 == 0){
-            LATCbits.LATC12 = 1;
-            make_note(0);
-        }else{
-              LATCbits.LATC12 = 0;  
+    while(totalMissed < 5){
+        if(comboNotes > 2){
+            //Star power LED on
+            //LATBbits.LATB12 = 1;
+            
+//            if(MPU_READ() == 1){
+//                // Make star power LEDs blink
+//                LATBbits.LATB12 = 0;
+//            }
         }
-        if(PORTBbits.RB8 == 0){
-            LATCbits.LATC6 = 1;
-            make_note(1);
-        }else{
-              LATCbits.LATC6 = 0;  
-        }
-        if(PORTBbits.RB9 == 0){
-            LATCbits.LATC7 = 1;
-            make_note(2);
-        }else{
-              LATCbits.LATC7 = 0;  
-        }
-        
-        //Poll gyro
-        //Log max gryo value since last interrupt
-        //Should only be polled when the star power mode is ready
-        if(MPU_READ() == 1){
-            gyro_flag = 1;
-        }        
     }
-// TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    return 0;
+    
+    totalMissed = 0;
+    isGameOn = 0;
 }
-
-
 
 void startTimer(){
     T1CONbits.TON = 1;
@@ -121,21 +135,32 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
     //Turn performance indicator LEDs on
     if(goodLedTimer == 0){
         //green LED off
+        LATCbits.LATC7 = 0;
     } else {
         goodLedTimer--;
+        comboNotes++;
+        LATCbits.LATC7 = 1;
         //green LED on
     }
     if(okayLedTimer == 0){
         //yellow LED off
+        LATCbits.LATC6 = 0;
     } else {
         okayLedTimer--;
+        comboNotes++;
+        LATCbits.LATC6 = 1;
         //yellow LED on
     }
     if(missLedTimer == 0){
         //red LED off
+        LATCbits.LATC12 = 0;
     } else {
         missLedTimer--;
-        //red LED on
+        totalMissed++;
+        comboNotes = 0; 
+        
+        LATBbits.LATB12 = 0; // Star Power LED off
+        LATCbits.LATC12 = 1; // red LED on
     }
            
     
@@ -190,16 +215,15 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         //Star power LED off
     }
     gyro_flag = 0;
-//	if (star power ready):
-//		Check MPU
-//		if(Star power ok):
-//			transition to star power
     
     IFS0bits.T1IF = 0;
 }
 
 void __attribute__((__interrupt__(auto_psv))) _INT0Interrupt(void) {
     int inputTime = TMR1;
+    if(isGameOn){
+        make_note(0);
+    }
     
     handleInput(0,inputTime);
     IFS0bits.INT0IF = 0;
@@ -207,7 +231,9 @@ void __attribute__((__interrupt__(auto_psv))) _INT0Interrupt(void) {
 }
 void __attribute__((__interrupt__(auto_psv))) _INT1Interrupt(void) {
     int inputTime = TMR1;
-    
+    if(isGameOn){
+        make_note(1);
+    }
     handleInput(1,inputTime);
     IFS0bits.INT1IF = 0;
 
@@ -215,7 +241,9 @@ void __attribute__((__interrupt__(auto_psv))) _INT1Interrupt(void) {
 
 void __attribute__((__interrupt__(auto_psv))) _INT2Interrupt(void) {
     int inputTime = TMR1;
-    
+    if(isGameOn){
+        make_note(2);
+    }
     handleInput(2,inputTime);
     IFS1bits.INT2IF = 0;
 }
