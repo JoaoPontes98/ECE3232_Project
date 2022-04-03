@@ -25,6 +25,9 @@ int songTime = 0;
 int x_value, y_value, modulate;
 void handleInput(char,int);
 void startTimer();
+int goodLedTimer = 0;
+int okayLedTimer = 0;
+int missLedTimer = 0;
 
 int main(void) {
     setupPins();
@@ -102,6 +105,28 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
 //		SRCLK pulse
     
     songTime++;
+    
+    //Turn performance indicator LEDs on
+    if(goodLedTimer == 0){
+        //green LED off
+    } else {
+        goodLedTimer--;
+        //green LED on
+    }
+    if(okayLedTimer == 0){
+        //yellow LED off
+    } else {
+        okayLedTimer--;
+        //yellow LED on
+    }
+    if(missLedTimer == 0){
+        //red LED off
+    } else {
+        missLedTimer--;
+        //red LED on
+    }
+           
+    
     
     while(pTop->time < songTime){
         pTop++;
@@ -191,6 +216,7 @@ void handleInput(char lane, int inputTime){
         if(offset <= (BAD_THRESHOLD * -1)){
             //miss, check again
             missNote(pBottom);
+            missLedTimer = 2;
             pBottom++;
         }
     } while (offset <= (BAD_THRESHOLD * -1));
@@ -202,16 +228,19 @@ void handleInput(char lane, int inputTime){
     if (offset <= (GOOD_THRESHOLD * -1)){
         //Okay & late
         hitNote(1);
+        okayLedTimer = 2;
         pBottom->hit = 2;
         pBottom++;
     } else if (offset <= GOOD_THRESHOLD) {
         //Great
         hitNote(2);
+        goodLedTimer = 2;
         pBottom->hit = 3;
         pBottom++;
     } else if (offset <= BAD_THRESHOLD) {
         //Okay & early
         hitNote(1);
+        okayLedTimer = 2;
         pBottom->hit = 4;
         pBottom++;
     }
