@@ -34,37 +34,47 @@ void setupSpeaker(){
 
 void make_note(int noteNum){
     int vol_divider = 1;
-    double modulate;
-    int notes[] = {1224,917,300};
+    double modulate = 0;
+    int notes[] = {1224,917,512};
+    //int notes[] = {1324,617,312};
     int cycles = notes[noteNum];
     
     //length of note
-    int x = 16000/cycles;
-    x = x*5;
+   // int x = 16000/cycles;
+    //x = x*5;
+    int x = 10;
     
     int count = 0;
     int i = 0;
 
     while(count <= x){
         int y_value=get_joystick_y();
-         // 3050-3100 considered neutral position
         if(y_value>3050&&y_value<3100){
             modulate=0;
         }
         else{
             modulate = get_whammy_value(y_value);
+        }       
+          //3050-3100 considered neutral position
+        if(y_value>3050&&y_value<3100){
+            modulate=0;
         }
-        for (i = 0; i<=99; i++){
-         DAC1DATHbits.DACDATH = (sine[i])+205;
+        else{
+            modulate = get_whammy_value(y_value)*2;
+        }
+        
+        for (i = 0; i<=24; i++){
+         DAC1DATHbits.DACDATH = (sine25[i])+205;
         // argument of delay is cycles, f = 16Mhz/(100*cycles), the {-50} is a
         // correction factor to account for the clock cycles for all instructions
         // in the loop, and is subject to change if any instructions in loop change. 
         // Octave is either 1 or 2, dividing cycles by 2 in delay
         // function doubles the frequency.
          
-         __delay32((cycles-50)-modulate); 
+         __delay32((cycles)-modulate); 
         } // end for
         i = 0;
         count++;
     } // end while 1
 }
+

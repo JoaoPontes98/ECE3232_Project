@@ -12,6 +12,7 @@
 #include "ledpins.h"
 #include "game.h"
 #include "setup.h"
+#include "MPU.h"
 #include "timing.h"
 #include "joystick.h"
 #include "speaker.h"
@@ -22,6 +23,7 @@
 Note* pTop;
 Note* pBottom;
 int songTime = 0;
+int gyro_flag = 0;
 int x_value, y_value, modulate;
 void handleInput(char,int);
 void startTimer();
@@ -33,6 +35,9 @@ int main(void) {
     setupJoystick();
     setupSpeaker();
     setupDigital();
+//    __delay_ms(30);
+    setup_MPU();
+
     
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
@@ -64,7 +69,7 @@ int main(void) {
 // TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     while(1){
-        if(PORTBbits.RB7 == 0){
+        if(PORTBbits.RB2 == 0){
             LATCbits.LATC12 = 1;
             make_note(0);
         }else{
@@ -82,6 +87,13 @@ int main(void) {
         }else{
               LATCbits.LATC7 = 0;  
         }
+        
+        //Poll gyro
+        //Log max gryo value since last interrupt
+        //Should only be polled when the star power mode is ready
+        if(MPU_READ() == 1){
+            gyro_flag = 1;
+        }        
     }
 // TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -144,7 +156,15 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
 //    Nop();
 //    Nop();
     LAT_SRCLK = 0;
-
+    if(gyro_flag == 1){
+        //Star power LED on
+        LATBbits.LATB12 = 1;
+        
+    } else {
+        LATBbits.LATB12 = 0;
+        //Star power LED off
+    }
+    gyro_flag = 0;
 //	if (star power ready):
 //		Check MPU
 //		if(Star power ok):
@@ -157,17 +177,22 @@ void __attribute__((__interrupt__(auto_psv))) _INT0Interrupt(void) {
     int inputTime = TMR1;
     
     handleInput(0,inputTime);
+    IFS0bits.INT0IF = 0;
+    
 }
 void __attribute__((__interrupt__(auto_psv))) _INT1Interrupt(void) {
     int inputTime = TMR1;
     
     handleInput(1,inputTime);
+    IFS0bits.INT1IF = 0;
+
 }
 
 void __attribute__((__interrupt__(auto_psv))) _INT2Interrupt(void) {
     int inputTime = TMR1;
     
     handleInput(2,inputTime);
+    IFS1bits.INT2IF = 0;
 }
 
 void handleInput(char lane, int inputTime){

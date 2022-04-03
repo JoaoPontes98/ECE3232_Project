@@ -7,4 +7,5 @@ void setupSccp();
 void setupPins();
 void setupJoystick();
 void setupDigital();
+void setup_MPU(void);
 #endif

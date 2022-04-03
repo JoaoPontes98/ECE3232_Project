@@ -66,14 +66,22 @@ void setupInterrupts(){
     IPC0bits.T1IP = 5;
     IEC0bits.T1IE = 1;
     //External interrupts (INT0, INT1, INT2)
+    IFS0bits.INT0IF = 0;
+    IFS1bits.INT2IF = 0;
+    IFS0bits.INT1IF = 0;
     IPC0bits.INT0IP = 6;
     IEC0bits.INT0IE = 1;
-    IFS0bits.INT1IF = 0;
     IPC3bits.INT1IP = 6;
+    
     IEC0bits.INT1IE = 1;
-    IFS1bits.INT2IF = 0;
     IPC5bits.INT2IP = 6;
     IEC1bits.INT2IE = 1;
+    
+    //Falling edge trigger
+    INTCON2bits.INT0EP = 1;
+    INTCON2bits.INT1EP = 1;
+    INTCON2bits.INT2EP = 1;
+
     
     RPINR0bits.INT1R = 40;
     RPINR1bits.INT2R = 41;
@@ -108,3 +116,20 @@ void setupJoystick(){
     ANSELDbits.ANSELD11 = 1; 
     TRISDbits.TRISD11 = 1;
 }
+
+void setup_MPU(void)
+{   
+    I2C1BRG  = 20;
+    I2C1CONLbits.I2CEN = 0;  // Disable I2C
+    I2C1CONLbits.DISSLW = 0; // Disable slew rate 
+    I2C1CONLbits.A10M = 0;   // 7-bit slave addr
+    I2C1CONLbits.SCLREL = 0; // SCL release
+    
+    I2C1CONLbits.I2CEN = 1;  // Enable I2C
+    
+    Write(208,107,0); //set sleep mode to 0
+    Write(208,27,0); // Set sensitivity
+    Write(208,71,0); //write 0 to measurement register
+    Write(208,72,0); //--
+}
+ 

@@ -3,7 +3,7 @@
 
 #include <xc.h> 
 
-void setup_MPU(void);
+
 void I2CNack(void);
 void I2CStop(void);
 void I2CStart(void);

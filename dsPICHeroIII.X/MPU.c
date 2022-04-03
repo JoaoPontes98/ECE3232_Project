@@ -8,13 +8,13 @@
 
 #include "xc.h"
 #include "MPU.h"
-#include "config.h"
+#define FCY 16000000UL
 #include <libpic30.h>
-int main(void){
-setup_MPU();
-MPU_READ();
-
-}
+//int main(void){
+//setup_MPU();
+//MPU_READ();
+//
+//}
 
 int MPU_READ(void){
     int buffer1 = 0;
@@ -32,21 +32,7 @@ int MPU_READ(void){
     
     return 0;
 }
-void setup_MPU(void)
-{   
-    I2C1BRG  = 20;
-    I2C1CONLbits.I2CEN = 0;  // Disable I2C
-    I2C1CONLbits.DISSLW = 0; // Disable slew rate 
-    I2C1CONLbits.A10M = 0;   // 7-bit slave addr
-    I2C1CONLbits.SCLREL = 0; // SCL release
-    
-    I2C1CONLbits.I2CEN = 1;  // Enable I2C
-    
-    Write(208,107,0); //set sleep mode to 0
-    Write(208,27,0); // Set sensitivity
-    Write(208,71,0); //write 0 to measurement register
-    Write(208,72,0); //--
-}
+
  
 
  

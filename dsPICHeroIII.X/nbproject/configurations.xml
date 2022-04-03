@@ -52,6 +52,8 @@
       <itemPath>joystick.c</itemPath>
       <itemPath>speaker.c</itemPath>
       <itemPath>speaker.h</itemPath>
+      <itemPath>MPU.c</itemPath>
+      <itemPath>MPU.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -60,6 +62,9 @@
       <itemPath>dsPICHeroIII.mc3</itemPath>
     </logicalFolder>
   </logicalFolder>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
     <conf name="default" type="2">
