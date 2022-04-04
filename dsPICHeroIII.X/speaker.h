@@ -78,6 +78,8 @@ static int sine25[] = {
 void setupSpeaker();
 void make_note(int noteNum);
 int buttonIsPressed();
+void beep();
+void metronome(int numOfBeeps, int BPM);
 
 
 #endif	/* SPEAKER_H */

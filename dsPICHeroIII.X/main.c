@@ -36,6 +36,7 @@ int okayLedTimer = 0;
 int missLedTimer = 0;
 int totalMissed = 0;
 int comboNotes = 0;
+int noteCount = 0;
 
 int main(void) {
     setupPins();
@@ -49,6 +50,7 @@ int main(void) {
     // Main Game loop
     while(1){
         homeState();
+        metronome(8, 120);
         playGame();
     }
 
@@ -103,8 +105,9 @@ void playGame(){
     pBottom = song;
     startTimer();
     
-    while(totalMissed < 5){
-        if(comboNotes > 2){
+    noteCount = 0;
+    while(noteCount < 5){
+        //if(comboNotes > 2){
             //Star power LED on
             //LATBbits.LATB12 = 1;
             
@@ -112,11 +115,13 @@ void playGame(){
 //                // Make star power LEDs blink
 //                LATBbits.LATB12 = 0;
 //            }
-        }
+        //}
     }
     
+    songTime = 0;
     totalMissed = 0;
     isGameOn = 0;
+   
 }
 
 void startTimer(){
@@ -138,7 +143,6 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         LATCbits.LATC7 = 0;
     } else {
         goodLedTimer--;
-        comboNotes++;
         LATCbits.LATC7 = 1;
         //green LED on
     }
@@ -147,7 +151,6 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         LATCbits.LATC6 = 0;
     } else {
         okayLedTimer--;
-        comboNotes++;
         LATCbits.LATC6 = 1;
         //yellow LED on
     }
@@ -156,10 +159,6 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         LATCbits.LATC12 = 0;
     } else {
         missLedTimer--;
-        totalMissed++;
-        comboNotes = 0; 
-        
-        LATBbits.LATB12 = 0; // Star Power LED off
         LATCbits.LATC12 = 1; // red LED on
     }
            
@@ -221,19 +220,12 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
 
 void __attribute__((__interrupt__(auto_psv))) _INT0Interrupt(void) {
     int inputTime = TMR1;
-    if(isGameOn){
-        make_note(0);
-    }
-    
     handleInput(0,inputTime);
     IFS0bits.INT0IF = 0;
     
 }
 void __attribute__((__interrupt__(auto_psv))) _INT1Interrupt(void) {
     int inputTime = TMR1;
-    if(isGameOn){
-        make_note(1);
-    }
     handleInput(1,inputTime);
     IFS0bits.INT1IF = 0;
 
@@ -241,9 +233,6 @@ void __attribute__((__interrupt__(auto_psv))) _INT1Interrupt(void) {
 
 void __attribute__((__interrupt__(auto_psv))) _INT2Interrupt(void) {
     int inputTime = TMR1;
-    if(isGameOn){
-        make_note(2);
-    }
     handleInput(2,inputTime);
     IFS1bits.INT2IF = 0;
 }
@@ -257,6 +246,11 @@ void handleInput(char lane, int inputTime){
     //Take earliest note possible
     
     int offset;
+        
+    if(isGameOn){
+        //make_note(lane);
+    }
+    
     do {
         int timeDiff = pBottom->time - songTime;
         //filter out all that can't possibly be hits (too late)
@@ -297,5 +291,6 @@ void handleInput(char lane, int inputTime){
         pBottom->hit = 4;
         pBottom++;
     }
-
+    
+    noteCount++;
 }

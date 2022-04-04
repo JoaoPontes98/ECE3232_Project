@@ -6,6 +6,7 @@
 #define E4 3421
 
 #define QUARTER_BEAT 15625
+#define HALF_BEAT 31250
 #define GOOD_THRESHOLD 7500
 #define BAD_THRESHOLD 22500
 

@@ -77,3 +77,28 @@ int buttonIsPressed(){
     }
     return 0;
 }
+
+void beep(){
+    int cycles = 1224;
+    
+    int i = 0;
+    int beepLength = 20;
+    int j = 0;
+    while(j < beepLength){          
+        for (i = 0; i<=24; i++){
+         DAC1DATHbits.DACDATH = (sine25[i])+205;
+         
+         __delay32(cycles); 
+        } // end for
+        i = 0;
+        j++;
+    } // end while 1
+}
+
+void metronome(int numOfBeeps, int BPM){
+    int ms = 1000/(BPM/60);
+    for(int i = 0; i<numOfBeeps; i++){
+        beep();
+        __delay_ms(ms);
+    }
+}
