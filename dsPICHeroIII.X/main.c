@@ -72,31 +72,39 @@ int main(void) {
 // TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     while(1){
-        if(PORTBbits.RB2 == 0){
-            LATCbits.LATC12 = 1;
-            make_note(0);
-        }else{
-              LATCbits.LATC12 = 0;  
+        while(songTime < 65){
+            if(PORTBbits.RB2 == 0){
+                LATCbits.LATC12 = 1;
+                make_note(0);
+            }else{
+                  LATCbits.LATC12 = 0;  
+            }
+            if(PORTBbits.RB8 == 0){
+                LATCbits.LATC6 = 1;
+                make_note(1);
+            }else{
+                  LATCbits.LATC6 = 0;  
+            }
+            if(PORTBbits.RB9 == 0){
+                LATCbits.LATC7 = 1;
+                make_note(2);
+            }else{
+                  LATCbits.LATC7 = 0;  
+            }
+
+            //Poll gyro
+            //Log max gryo value since last interrupt
+            //Should only be polled when the star power mode is ready
+            if(MPU_READ() == 1){
+                gyro_flag = 1;
+            }    
         }
-        if(PORTBbits.RB8 == 0){
-            LATCbits.LATC6 = 1;
-            make_note(1);
-        }else{
-              LATCbits.LATC6 = 0;  
+        songTime = 0;
+        pTop = song;
+        pBottom = song;
+        for(int i = 0; i < SONG_LENGTH; i++){
+            song[i].hit = 0;
         }
-        if(PORTBbits.RB9 == 0){
-            LATCbits.LATC7 = 1;
-            make_note(2);
-        }else{
-              LATCbits.LATC7 = 0;  
-        }
-        
-        //Poll gyro
-        //Log max gryo value since last interrupt
-        //Should only be polled when the star power mode is ready
-        if(MPU_READ() == 1){
-            gyro_flag = 1;
-        }        
     }
 // TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
