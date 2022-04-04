@@ -30,7 +30,7 @@ void startTimer();
 int goodLedTimer = 0;
 int okayLedTimer = 0;
 int missLedTimer = 0;
-
+int bpmIndex = 0;
 int main(void) {
     setupPins();
     setupTimer();
@@ -99,11 +99,18 @@ int main(void) {
                 gyro_flag = 1;
             }    
         }
+        //Start song from beginning
         songTime = 0;
         pTop = song;
         pBottom = song;
+        //Reset note state (waiting to be hit)
         for(int i = 0; i < SONG_LENGTH; i++){
             song[i].hit = 0;
+        }
+        //Increase BPM to a maximum BPM of 120
+        if(bpmIndex < 6){
+            bpmIndex++;
+            PR1 = BPMS[bpmIndex];
         }
     }
 // TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

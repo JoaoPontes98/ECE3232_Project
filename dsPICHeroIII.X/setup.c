@@ -102,7 +102,7 @@ void setupTimer(){
     // b1       - 1     - Use External Clock selected with b9-8
     T1CON = 0x0326;
     // 1 timer count = 0.000008s
-    PR1 = QUARTER_BEAT;        //0.125s
+    PR1 = BPMS[0];        //0.25s
 }
 
 // Function will set up the joystick and the adc so that functions in joystick.c can be used
