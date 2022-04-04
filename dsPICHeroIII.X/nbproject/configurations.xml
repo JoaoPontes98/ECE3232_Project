@@ -50,10 +50,10 @@
       <itemPath>timing.h</itemPath>
       <itemPath>joystick.h</itemPath>
       <itemPath>joystick.c</itemPath>
-      <itemPath>speaker.c</itemPath>
-      <itemPath>speaker.h</itemPath>
       <itemPath>MPU.c</itemPath>
       <itemPath>MPU.h</itemPath>
+      <itemPath>speaker.c</itemPath>
+      <itemPath>speaker.h</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"
@@ -63,7 +63,7 @@
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
-    <Elem>.</Elem>
+    <Elem></Elem>
   </sourceRootList>
   <projectmakefile>Makefile</projectmakefile>
   <confs>
