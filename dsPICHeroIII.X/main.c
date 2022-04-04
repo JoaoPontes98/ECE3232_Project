@@ -233,9 +233,9 @@ void handleInput(char lane, int inputTime){
         int timeDiff = 8 + pBottom->time - songTime;
         //filter out all that can't possibly be hits (too late)
         if(timeDiff < 0) {
-            offset = inputTime - QUARTER_BEAT + ((long)timeDiff * QUARTER_BEAT);
+            offset = inputTime - BPMS[bpmIndex] + ((long)timeDiff * BPMS[bpmIndex]);
         } else {
-            offset = inputTime + ((long)timeDiff * QUARTER_BEAT);
+            offset = inputTime + ((long)timeDiff * BPMS[bpmIndex]);
         }
 
         if(offset <= (BAD_THRESHOLD * -1)){
