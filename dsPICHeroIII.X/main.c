@@ -171,23 +171,8 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         pTop++;
     }
     LAT_RCLK = 1;
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
     LAT_RCLK = 0;
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
     LAT_SRCLK = 1;
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
-//    Nop();
     LAT_SRCLK = 0;
     if(gyro_flag == 1){
         //Star power LED on
@@ -236,14 +221,14 @@ void handleInput(char lane, int inputTime){
     //  Award points
     //Take earliest note possible
     
-    int offset;
+    long offset;
     do {
-        int timeDiff = pBottom->time - songTime;
+        int timeDiff = 8 + pBottom->time - songTime;
         //filter out all that can't possibly be hits (too late)
         if(timeDiff < 0) {
-            offset = inputTime - QUARTER_BEAT + (timeDiff * QUARTER_BEAT);
+            offset = inputTime - QUARTER_BEAT + ((long)timeDiff * QUARTER_BEAT);
         } else {
-            offset = inputTime + (timeDiff * QUARTER_BEAT);
+            offset = inputTime + ((long)timeDiff * QUARTER_BEAT);
         }
 
         if(offset <= (BAD_THRESHOLD * -1)){
