@@ -14,7 +14,7 @@ int gameScore = 0;
 int starPower = 0;
 int failCount = 0;
 
-#define MAX_STAR_POWER 5
+#define MAX_STAR_POWER 3
 
 void awardPoints(int pts){
     gameScore += pts;
@@ -43,4 +43,8 @@ char starPowerReady(){
         return 1;
     }
     return 0;
+}
+
+int getGameScore(){
+    return gameScore;
 }

@@ -31,17 +31,53 @@ int goodLedTimer = 0;
 int okayLedTimer = 0;
 int missLedTimer = 0;
 int bpmIndex = 0;
+int inStarPower = 0;
+
 int main(void) {
+    TRISCbits.TRISC13 = 0;
+    TRISCbits.TRISC14 = 0;
+    TRISCbits.TRISC15 = 0;
+    
     setupPins();
     setupTimer();
     setupInterrupts();
     setupJoystick();
     setupSpeaker();
     setupDigital();
-//    __delay_ms(30);
     setup_MPU();
 
+    // Main Game loop
+    while(1){
+        homeState();
+        metronome(4, 60);
+        playGame();
+    }
+
+    return 0;
+}
+
+void homeState(){
+    // Turn all LEDs on
+    LATCbits.LATC12 = 1;
+    LATCbits.LATC6 = 1;
+    LATCbits.LATC7 = 1;
     
+    while(1){
+        if((PORTBbits.RB2 == 0 || PORTBbits.RB8 == 0)
+          ||PORTBbits.RB9 == 0){ // any button is pressed
+            //turn off all LEDs
+            LATCbits.LATC12 = 0;
+            LATCbits.LATC6 = 0;
+            LATCbits.LATC7 = 0;
+            
+            break;
+        }
+    }
+    
+    return;
+}
+
+void playGame(){
     //Hot Crossed Buns
     Note song[SONG_LENGTH] = { 
         {.lane = 2, .time = 0 , .freq = E4, .hit = 0},
@@ -65,39 +101,35 @@ int main(void) {
     pTop = song;
     pBottom = song;
     startTimer();
-//    while(songTime < 60){
-//        Nop();
-//    }
-    
-// TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
     while(1){
         while(songTime < 65){
-            if(PORTBbits.RB2 == 0){
-                LATCbits.LATC12 = 1;
-                make_note(0);
-            }else{
-                  LATCbits.LATC12 = 0;  
-            }
-            if(PORTBbits.RB8 == 0){
-                LATCbits.LATC6 = 1;
-                make_note(1);
-            }else{
-                  LATCbits.LATC6 = 0;  
-            }
-            if(PORTBbits.RB9 == 0){
-                LATCbits.LATC7 = 1;
-                make_note(2);
-            }else{
-                  LATCbits.LATC7 = 0;  
-            }
-
             //Poll gyro
             //Log max gryo value since last interrupt
-            //Should only be polled when the star power mode is ready
-            if(MPU_READ() == 1){
-                gyro_flag = 1;
-            }    
+            //Should only be polled when the star power mode is ready   
+            
+            if(starPowerReady() && inStarPower == 0){
+                LATBbits.LATB12 = 1;
+                if(MPU_READ() == 1){
+                    gyro_flag = 1;
+                }
+                if(gyro_flag){
+                    inStarPower = 1;
+                }
+            }else if(!inStarPower){
+                LATBbits.LATB12 = 0;
+            }
+            
+            if(inStarPower>0 && inStarPower < 30){
+                if(inStarPower % 2 == 0){
+                    LATBbits.LATB12 = 1;
+                }else{
+                    LATBbits.LATB12 = 0;
+                }
+            }else{
+                LATBbits.LATB12 = 0;
+                inStarPower=0;
+            }
         }
         //Start song from beginning
         songTime = 0;
@@ -113,12 +145,24 @@ int main(void) {
             PR1 = BPMS[bpmIndex];
         }
     }
-// TEST LOOP ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-    return 0;
 }
 
-
+void displayScore(int gameScore){
+    int temp = gameScore % 100;
+    
+    if(temp < 25)
+    {
+        LATCbits.LATC13 = 0; //75
+        LATCbits.LATC14 = 0; //50
+        LATCbits.LATC15 = 0; //25
+    }
+    else{
+    LATCbits.LATC15 = 1;// Light up 25 pt LED
+    if(temp >= 50){LATCbits.LATC14 = 1; }
+    if(temp >= 75){LATCbits.LATC13 = 1; }
+    }
+    
+}
 
 void startTimer(){
     T1CONbits.TON = 1;
@@ -132,28 +176,36 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
 //		SRCLK pulse
     
     songTime++;
-    
+                    
+    if(inStarPower){
+        inStarPower++;
+    }
+
     //Turn performance indicator LEDs on
     if(goodLedTimer == 0){
         //green LED off
+        LATCbits.LATC7 = 0;
     } else {
         goodLedTimer--;
         //green LED on
+        LATCbits.LATC7 = 1;
     }
     if(okayLedTimer == 0){
         //yellow LED off
+        LATCbits.LATC6 = 0;
     } else {
         okayLedTimer--;
         //yellow LED on
+        LATCbits.LATC6 = 1;
     }
     if(missLedTimer == 0){
         //red LED off
+        LATCbits.LATC12 = 0;
     } else {
         missLedTimer--;
         //red LED on
+        LATCbits.LATC12 = 1;
     }
-           
-    
     
     while(pTop->time < songTime){
         pTop++;
@@ -190,10 +242,6 @@ void __attribute__((__interrupt__(auto_psv))) _T1Interrupt(void) {
         //Star power LED off
     }
     gyro_flag = 0;
-//	if (star power ready):
-//		Check MPU
-//		if(Star power ok):
-//			transition to star power
     
     IFS0bits.T1IF = 0;
 }
@@ -252,22 +300,28 @@ void handleInput(char lane, int inputTime){
     
     if (offset <= (GOOD_THRESHOLD * -1)){
         //Okay & late
-        hitNote(1);
+        
+        if(!inStarPower){hitNote(1);}
+        else{hitNote(4);}
         okayLedTimer = 2;
         pBottom->hit = 2;
         pBottom++;
     } else if (offset <= GOOD_THRESHOLD) {
         //Great
-        hitNote(2);
+        if(!inStarPower){hitNote(2);}
+        else{hitNote(4);}
         goodLedTimer = 2;
         pBottom->hit = 3;
         pBottom++;
     } else if (offset <= BAD_THRESHOLD) {
         //Okay & early
-        hitNote(1);
+        if(!inStarPower){hitNote(1);}
+        else{hitNote(4);}
         okayLedTimer = 2;
         pBottom->hit = 4;
         pBottom++;
     }
-
+    
+    displayScore(getGameScore());
+    make_note(lane);
 }

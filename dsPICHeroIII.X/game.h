@@ -8,7 +8,6 @@ typedef struct note {
     int freq;
     signed char hit;
 } Note;
-
 #define HIT_NONE 0
 
 void awardPoints(int);
@@ -18,5 +17,7 @@ void incrementStarPower();
 void missNote(Note*);
 
 void hitNote(int);
+
+int getGameScore();
 
 #endif
