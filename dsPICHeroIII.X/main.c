@@ -5,9 +5,8 @@
  * Created on February 26, 2022, 11:56 PM
  */
 
-
+#define FCY 16000000UL
 #include "xc.h"
-#include <libpic30.h>
 #include "config.h"
 #include "ledpins.h"
 #include "game.h"
@@ -16,7 +15,8 @@
 #include "timing.h"
 #include "joystick.h"
 #include "speaker.h"
-#define FCY 16000000UL
+#include "libpic30.h"
+
 
 #define SONG_LENGTH 17
 #define LIVES 5
@@ -66,6 +66,7 @@ int main(void) {
     setupJoystick();
     setupSpeaker();
     setupDigital();
+    __delay_ms(30);
     setup_MPU();
 
     LAT_SRCLR = 0;
