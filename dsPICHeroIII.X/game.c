@@ -44,3 +44,23 @@ char starPowerReady(){
     }
     return 0;
 }
+
+int getGameScore(){
+    return gameScore;
+}
+
+void setGameScore(int num){
+    gameScore = num;
+}
+
+int getFailCount(){
+    return failCount;
+}
+
+void setFailCount(int num){
+    failCount = num;
+}
+
+void resetStarPower(){
+    starPower = 0;
+}

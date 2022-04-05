@@ -33,9 +33,6 @@ int MPU_READ(void){
     return 0;
 }
 
- 
-
- 
 void I2CNack(void)
 {
     I2C1CONLbits.ACKDT = 1;      // Send NACK

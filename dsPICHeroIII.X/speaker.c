@@ -33,28 +33,14 @@ void setupSpeaker(){
 }
 
 void make_note(int noteNum){
-    int vol_divider = 1;
     double modulate = 0;
     int notes[] = {1224,917,512};
-    //int notes[] = {1324,617,312};
     int cycles = notes[noteNum];
     
-    //length of note
-   // int x = 16000/cycles;
-    //x = x*5;
-    int x = 10;
-    
-    int count = 0;
     int i = 0;
 
-    while(count <= x){
-        int y_value=get_joystick_y();
-        if(y_value>3050&&y_value<3100){
-            modulate=0;
-        }
-        else{
-            modulate = get_whammy_value(y_value);
-        }       
+    while(buttonIsPressed() == 1){
+        int y_value=get_joystick_y();    
           //3050-3100 considered neutral position
         if(y_value>3050&&y_value<3100){
             modulate=0;
@@ -74,7 +60,38 @@ void make_note(int noteNum){
          __delay32((cycles)-modulate); 
         } // end for
         i = 0;
-        count++;
     } // end while 1
+}
+
+int buttonIsPressed(){
+    if((PORTBbits.RB2 == 0||PORTBbits.RB8 == 0)||PORTBbits.RB9 == 0){
+        return 1;
+    }
+    return 0;
+}
+
+void beep(){
+    int cycles = 1224;
+    
+    int i = 0;
+    int beepLength = 20;
+    int j = 0;
+    while(j < beepLength){          
+        for (i = 0; i<=24; i++){
+         DAC1DATHbits.DACDATH = (sine25[i])+205;
+         
+         __delay32(cycles); 
+        } // end for
+        i = 0;
+        j++;
+    } // end while 1
+}
+
+void metronome(int numOfBeeps, int BPM){
+    int ms = 1000/(BPM/60);
+    for(int i = 0; i<numOfBeeps; i++){
+        beep();
+        __delay_ms(ms);
+    }
 }
 
