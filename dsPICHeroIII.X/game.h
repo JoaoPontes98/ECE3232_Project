@@ -20,4 +20,12 @@ void hitNote(int);
 
 int getGameScore();
 
+void setGameScore(int num);
+
+int getFailCount();
+
+void setFailCount(int num);
+
+void resetStarPower();
+
 #endif

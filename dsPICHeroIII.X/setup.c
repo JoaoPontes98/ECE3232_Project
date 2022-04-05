@@ -63,26 +63,25 @@ void setupDigital(){
 
 void setupInterrupts(){
     //Timer interrupts
-    IPC0bits.T1IP = 5;
+    IPC0bits.T1IP = 6;
     IEC0bits.T1IE = 1;
     //External interrupts (INT0, INT1, INT2)
     IFS0bits.INT0IF = 0;
     IFS1bits.INT2IF = 0;
     IFS0bits.INT1IF = 0;
-    IPC0bits.INT0IP = 6;
-    IEC0bits.INT0IE = 1;
-    IPC3bits.INT1IP = 6;
+    IPC0bits.INT0IP = 5;
     
-    IEC0bits.INT1IE = 1;
-    IPC5bits.INT2IP = 6;
-    IEC1bits.INT2IE = 1;
+    IPC3bits.INT1IP = 5;
+    
+    
+    IPC5bits.INT2IP = 5;
+    
     
     //Falling edge trigger
     INTCON2bits.INT0EP = 1;
     INTCON2bits.INT1EP = 1;
     INTCON2bits.INT2EP = 1;
 
-    
     RPINR0bits.INT1R = 40;
     RPINR1bits.INT2R = 41;
     
