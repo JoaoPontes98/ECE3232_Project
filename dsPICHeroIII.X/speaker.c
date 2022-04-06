@@ -32,10 +32,10 @@ void setupSpeaker(){
     DAC1CONLbits.DACOEN = 1;
 }
 
-void make_note(int noteNum){
+void make_note(int cycles){
     double modulate = 0;
-    int notes[] = {1224,917,512};
-    int cycles = notes[noteNum];
+//    int notes[] = {1224,917,512};
+//    int cycles = notes[noteNum];
     
     int i = 0;
 
@@ -57,7 +57,7 @@ void make_note(int noteNum){
         // Octave is either 1 or 2, dividing cycles by 2 in delay
         // function doubles the frequency.
          
-         __delay32((cycles)-modulate); 
+         __delay32((cycles)-modulate-50); 
         } // end for
         i = 0;
     } // end while 1

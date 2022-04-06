@@ -18,7 +18,7 @@
 #include "libpic30.h"
 
 
-#define SONG_LENGTH 17
+#define SONG_LENGTH 23
 #define LIVES 5
 
 Note* pTop;
@@ -35,25 +35,52 @@ int inStarPower = 0;
 
 
 //Hot Crossed Buns
-    Note song[SONG_LENGTH] = { 
-        {.lane = 2, .time = 0 , .freq = E4, .hit = 0},
-        {.lane = 1, .time = 4 , .freq = D4, .hit = 0 },
-        {.lane = 0, .time = 8 , .freq = C4, .hit = 0 },
-        {.lane = 2, .time = 16, .freq = E4, .hit = 0 },
-        {.lane = 1, .time = 20, .freq = D4, .hit = 0 },
-        {.lane = 0, .time = 24, .freq = C4, .hit = 0 },
-        {.lane = 0, .time = 32, .freq = C4, .hit = 0 },
-        {.lane = 0, .time = 34, .freq = C4, .hit = 0 },
-        {.lane = 0, .time = 36, .freq = C4, .hit = 0 },
-        {.lane = 0, .time = 38, .freq = C4, .hit = 0 },
-        {.lane = 1, .time = 40, .freq = D4, .hit = 0 },
-        {.lane = 1, .time = 42, .freq = D4, .hit = 0 },
-        {.lane = 1, .time = 44, .freq = D4, .hit = 0 },
-        {.lane = 1, .time = 46, .freq = D4, .hit = 0 },
-        {.lane = 2, .time = 48, .freq = E4, .hit = 0 },
-        {.lane = 1, .time = 52, .freq = D4, .hit = 0 },
-        {.lane = 0, .time = 56, .freq = C4, .hit = 0 }
-     };
+//    Note song[SONG_LENGTH] = { 
+//        {.lane = 2, .time = 0 , .freq = E4, .hit = 0},
+//        {.lane = 1, .time = 4 , .freq = D4, .hit = 0 },
+//        {.lane = 0, .time = 8 , .freq = C4, .hit = 0 },
+//        {.lane = 2, .time = 16, .freq = E4, .hit = 0 },
+//        {.lane = 1, .time = 20, .freq = D4, .hit = 0 },
+//        {.lane = 0, .time = 24, .freq = C4, .hit = 0 },
+//        {.lane = 0, .time = 32, .freq = C4, .hit = 0 },
+//        {.lane = 0, .time = 34, .freq = C4, .hit = 0 },
+//        {.lane = 0, .time = 36, .freq = C4, .hit = 0 },
+//        {.lane = 0, .time = 38, .freq = C4, .hit = 0 },
+//        {.lane = 1, .time = 40, .freq = D4, .hit = 0 },
+//        {.lane = 1, .time = 42, .freq = D4, .hit = 0 },
+//        {.lane = 1, .time = 44, .freq = D4, .hit = 0 },
+//        {.lane = 1, .time = 46, .freq = D4, .hit = 0 },
+//        {.lane = 2, .time = 48, .freq = E4, .hit = 0 },
+//        {.lane = 1, .time = 52, .freq = D4, .hit = 0 },
+//        {.lane = 0, .time = 56, .freq = C4, .hit = 0 }
+//     };
+
+    // A Cruel Angel's Thesis
+    Note song[SONG_LENGTH] = {
+        {.lane=0, .time=0, .freq=C4, .hit=0},
+        {.lane=1, .time=4, .freq=Eb4, .hit=0},
+        {.lane=2, .time=8, .freq=F4, .hit=0},
+        {.lane=1, .time=11, .freq=Eb4, .hit=0},
+        {.lane=1, .time=14, .freq=F4, .hit=0},
+        {.lane=1, .time=16, .freq=F4, .hit=0},
+        {.lane=1, .time=18, .freq=F4, .hit=0},
+        {.lane=2, .time=20, .freq=Bb5, .hit=0},
+        {.lane=1, .time=22, .freq=Ab5, .hit=0},
+        {.lane=1, .time=24, .freq=G4, .hit=0},
+        {.lane=0, .time=25, .freq=F4, .hit=0},
+        {.lane=1, .time=27, .freq=G4, .hit=0},
+        {.lane=0, .time=32, .freq=G4, .hit=0},
+        {.lane=1, .time=36, .freq=Bb5, .hit=0},
+        {.lane=2, .time=40, .freq=C5, .hit=0},
+        {.lane=1, .time=43, .freq=F4, .hit=0},
+        {.lane=0, .time=46, .freq=Eb4, .hit=0},
+        {.lane=1, .time=48, .freq=Bb5, .hit=0},
+        {.lane=1, .time=50, .freq=Bb5, .hit=0},
+        {.lane=0, .time=52, .freq=G4, .hit=0},
+        {.lane=1, .time=52, .freq=Bb5, .hit=0},
+        {.lane=1, .time=54, .freq=Bb5, .hit=0},
+        {.lane=2, .time=57, .freq=C5, .hit=0},
+    };
 
 int main(void) {
     TRISCbits.TRISC13 = 0;
@@ -337,8 +364,9 @@ void handleInput(char lane, int inputTime){
             pBottom++;
         }
     } while (offset <= (BAD_THRESHOLD * -1));
-    
+    int freq = pBottom->freq;
     if(pBottom->lane == lane){
+        
         if (offset <= (GOOD_THRESHOLD * -1)){
             //Okay & late
 
@@ -365,5 +393,5 @@ void handleInput(char lane, int inputTime){
     
     }
     displayScore(getGameScore());
-    make_note(lane);
+    make_note(freq);
 }
