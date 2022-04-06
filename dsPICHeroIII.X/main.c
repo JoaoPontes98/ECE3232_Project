@@ -77,9 +77,9 @@ int inStarPower = 0;
         {.lane=1, .time=48, .freq=Bb5, .hit=0},
         {.lane=1, .time=50, .freq=Bb5, .hit=0},
         {.lane=0, .time=52, .freq=G4, .hit=0},
-        {.lane=1, .time=52, .freq=Bb5, .hit=0},
         {.lane=1, .time=54, .freq=Bb5, .hit=0},
-        {.lane=2, .time=57, .freq=C5, .hit=0},
+        {.lane=1, .time=56, .freq=Bb5, .hit=0},
+        {.lane=2, .time=59, .freq=C5, .hit=0},
     };
 
 int main(void) {
